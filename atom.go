@@ -110,7 +110,7 @@ type atomItem struct {
 	Summary string     `xml:"summary"`
 	Content string     `xml:"content"`
 	Links   []atomLink `xml:"link"`
-	Date    string     `xml:"updated"`
+	Date    string     `xml:"published"`
 	ID      string     `xml:"id"`
 }
 
