@@ -43,7 +43,12 @@ func parseAtom(data []byte, read *db) (*Feed, error) {
 		next.Title = item.Title
 		next.Summary = item.Summary
 		next.Content = item.Content
-		if item.Date != "" {
+		if item.Published != "" {
+			next.Date, err = parseTime(item.Published)
+			if err != nil {
+				return nil, err
+			}
+		} else if item.Date != "" {
 			next.Date, err = parseTime(item.Date)
 			if err != nil {
 				return nil, err
@@ -105,13 +110,14 @@ type atomFeed struct {
 }
 
 type atomItem struct {
-	XMLName xml.Name   `xml:"entry"`
-	Title   string     `xml:"title"`
-	Summary string     `xml:"summary"`
-	Content string     `xml:"content"`
-	Links   []atomLink `xml:"link"`
-	Date    string     `xml:"published"`
-	ID      string     `xml:"id"`
+	XMLName   xml.Name   `xml:"entry"`
+	Title     string     `xml:"title"`
+	Summary   string     `xml:"summary"`
+	Content   string     `xml:"content"`
+	Links     []atomLink `xml:"link"`
+	Date      string     `xml:"updated"`
+	Published string     `xml:"published"`
+	ID        string     `xml:"id"`
 }
 
 type atomImage struct {
